@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using static Codice.CM.Common.CmCallContext;
-using System.Xml.Serialization;
 
 [CustomEditor(typeof(PathManager))]
 public class PathManagerEditor : Editor
@@ -58,6 +55,9 @@ public class PathManagerEditor : Editor
 				EditorGUILayout.BeginHorizontal();
 				Waypoint p = thePath[i];
 
+				Color c = GUI.color;
+				if (selectedPoint == p) GUI.color = Color.green;
+
 				Vector3 oldPos = p.GetPos();
 				Vector3 newPos = EditorGUILayout.Vector3Field("", oldPos);
 
@@ -68,6 +68,7 @@ public class PathManagerEditor : Editor
 					toDelete.Add(i);
 				}
 
+				GUI.color = c;
 				EditorGUILayout.EndHorizontal();
 			}
 
