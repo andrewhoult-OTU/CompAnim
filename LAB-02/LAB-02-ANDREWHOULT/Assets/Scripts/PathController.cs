@@ -14,6 +14,10 @@ public class PathFollower : MonoBehaviour
 	public float RotateSpeed;
 
 
+	public Animator animator;
+	public bool isWalking;
+
+
 	void Start()
 	{
 		thePath = pathManager.GetPath();
@@ -21,6 +25,9 @@ public class PathFollower : MonoBehaviour
 		{
 			target = thePath[0];
 		}
+
+		isWalking = false;
+		animator.SetBool("IsWalking", isWalking);
 	}
 
 	void MoveForward()
@@ -49,13 +56,28 @@ public class PathFollower : MonoBehaviour
 
 	void Update()
 	{
-		RotateTowardsTarget();
-		MoveForward();
+		if (Input.anyKeyDown)
+		{
+			isWalking = !isWalking;
+			animator.SetBool("IsWalking", isWalking);
+		}
+
+		if (isWalking)
+		{
+			RotateTowardsTarget();
+			MoveForward();
+		}
 	}
 
 
-	void OnTriggerEnter()
+	void OnTriggerEnter(Collider other)
 	{
+		if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+		{
+			isWalking = false;
+			animator.SetBool("IsWalking", isWalking);
+			return;
+		}
 		target = pathManager.GetNextTarget();
 	}
 }
