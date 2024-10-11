@@ -17,6 +17,8 @@ public class PathFollower : MonoBehaviour
 	public Animator animator;
 	public bool isWalking;
 
+	public bool idleOnHit = false;
+
 
 	void Start()
 	{
@@ -74,10 +76,24 @@ public class PathFollower : MonoBehaviour
 	{
 		if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
 		{
-			isWalking = false;
+			if (idleOnHit)
+			{
+				isWalking = false;
+				animator.SetBool("IsWalking", isWalking);
+			}
+			return;
+		}
+		else
+			target = pathManager.GetNextTarget();
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		if (idleOnHit && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+		{
+			isWalking = true;
 			animator.SetBool("IsWalking", isWalking);
 			return;
 		}
-		target = pathManager.GetNextTarget();
 	}
 }

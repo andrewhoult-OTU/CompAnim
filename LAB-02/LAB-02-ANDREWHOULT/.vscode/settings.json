@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "LAB-02-ANDREWHOULT.sln"
+	"dotnet.defaultSolution": "LAB-02-ANDREWHOULT.sln",
+	"dotnet.preferCSharpExtension": true
 }

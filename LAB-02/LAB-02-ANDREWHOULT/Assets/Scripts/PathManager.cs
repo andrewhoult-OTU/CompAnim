@@ -13,10 +13,17 @@ public class PathManager : MonoBehaviour
 
 	public List<GameObject> prefabPoints;
 
+	[SerializeField]
+	bool debugMode = false;
+
 
 	public Waypoint GetNextTarget()
 	{
 		int nextPointIndex = (currentPointIndex + 1) % path.Count;
+
+		if (debugMode)
+			Debug.Log($"{currentPointIndex} : {nextPointIndex}");
+
 		currentPointIndex = nextPointIndex;
 		return path[nextPointIndex];
 	}
